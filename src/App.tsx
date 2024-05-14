@@ -7,7 +7,10 @@ import { theme } from "./theme";
 import { OmdbApi } from './apis/omdb-api';
 
 export default function App() {
-	const movieApi = new OmdbApi('a810ca9f', 'tt3896198');
+	const movieApi = new OmdbApi(
+		import.meta.env.VITE_OMDB_API_KEY, 
+		import.meta.env.VITE_OMDB_IMDB_ID
+	);
 
 	return <MantineProvider theme={theme} defaultColorScheme="dark">
 				<HashRouter>
