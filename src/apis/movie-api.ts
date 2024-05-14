@@ -1,10 +1,12 @@
+import { FilterOption } from '../models/filter-option';
 import { Movie } from '../models/movie';
 
-export interface SearchOption {
-	title?: string,
-	year?: number
+export interface SearchResponse {
+	code: 'success' | 'error',
+	movies: Movie[],
+	total: number
 }
 
 export interface MovieApi {
-	search: (option: SearchOption) => Promise<Movie[]>;
+	search: (option: FilterOption) => Promise<SearchResponse>;
 }

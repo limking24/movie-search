@@ -2,5 +2,5 @@ export interface Movie {
 	id: string,
 	poster: string,
 	title: string,
-	year: string
+	year: number
 }
