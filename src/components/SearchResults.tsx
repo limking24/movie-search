@@ -8,6 +8,9 @@ interface Props {
 
 export default function SearchResults({movies}: Props) {
 	return <Grid bg="var(--mantine-color-dark-6)" p="15px">
+				{movies.length == 0 && 
+					<p style={{textAlign: 'center'}}>No movies found.</p>}
+
 				{movies.map((movie, i) =>
 					<GridCol span={{base: 4, sm: 3}} key={i}>
 						<MovieDetail

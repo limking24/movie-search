@@ -53,9 +53,10 @@ export class OmdbApi implements MovieApi {
 				total: Number($json.totalResults)
 			} satisfies SearchResponse;
 		} else {
-			console.warn((json as BadResponse).Error);
+			let error = (json as BadResponse).Error;
+			console.warn(error);
 			return {
-				code: 'error',
+				code: error == 'Movie not found!' ? 'success' : 'error',
 				movies: [],
 				total: 0
 			} satisfies SearchResponse;
