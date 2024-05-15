@@ -36,6 +36,7 @@ export class OmdbApi implements MovieApi {
 		params.set('type', 'movie');
 		if (this.imdbId) params.set('i', this.imdbId);
 		if (option.year) params.set('y', String(option.year));
+		if (option.page) params.set('page', String(option.page));
 
 		let response = await fetch(url);
 		let json: OmdbResponse = await response.json();
