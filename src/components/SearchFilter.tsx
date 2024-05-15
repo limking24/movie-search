@@ -15,7 +15,7 @@ export default function SearchFilter({onChange}: Props) {
 	const [title, setTitle] = useState('');
 	const [year, setYear] = useState<DateValue>(null);
 
-	// On URL change
+	// Notify parent on URL change
 	useEffect(() => {
 		let newTitle = searchParams.get('title');
 		let newYear = searchParams.get('year');
@@ -26,6 +26,7 @@ export default function SearchFilter({onChange}: Props) {
 		onChange({ title: $title, year: $year });
 	}, [location]);
 
+	// Update URL on submit
 	function sumbit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		setSearchParams({

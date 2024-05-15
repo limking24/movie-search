@@ -5,34 +5,40 @@ import { FilterOption } from '../models/filter-option';
 import classes from './Search.module.css';
 import SearchFilter from './SearchFilter';
 import SearchResults from './SearchResults';
+import { Movie } from '../models/movie';
+
+type Result = 'none' | 'success' | 'error';
 
 interface Props {
 	movieApi: MovieApi
 }
 
 export default function Search({ movieApi }: Props) {
-	const [page, setPage] = useState(1);
-	const [response, setResponse] = useState<SearchResponse | null>(null);
+	const [movies, setMovies] = useState<Movie[]>([]);
+	const [searchResult, setSearchResult] = useState<Result>('none');
 
 	async function search(option: FilterOption) {
 		try {
 			let response = option.title ? await movieApi.search(option) : null;
-			setResponse(response);
+			setMovies(response?.movies ?? []);
+			setSearchResult(response?.code ?? 'none')
 		} catch (e) {
-			setResponse({
-				code: 'error',
-				movies: [],
-				total: 0
-			})
+			setMovies([]);
+			setSearchResult('error');
 		}
 	}
 
 	return <Container>
 				<Space h="md"/>
-				<div className={response == null ? classes.center : ''}>
+				<div className={searchResult == 'none' ? classes.center : ''}>
 					<SearchFilter onChange={search} />
 				</div>
 				<Space h="md"/>
-				{ response != null && <SearchResults response={response} /> }
+
+				{ searchResult == 'success' && 
+					<SearchResults movies={movies} /> }
+
+				{ searchResult == 'error' && 
+					<p style={{textAlign: 'center'}}> Oops,something went wrong :&#40;</p>}
 			</Container>;
 }
